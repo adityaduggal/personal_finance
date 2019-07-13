@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include personal_finance *.css
+recursive-include personal_finance *.csv
+recursive-include personal_finance *.html
+recursive-include personal_finance *.ico
+recursive-include personal_finance *.js
+recursive-include personal_finance *.json
+recursive-include personal_finance *.md
+recursive-include personal_finance *.png
+recursive-include personal_finance *.py
+recursive-include personal_finance *.svg
+recursive-include personal_finance *.txt
+recursive-exclude personal_finance *.pyc
