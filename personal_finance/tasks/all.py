@@ -10,7 +10,7 @@ def execute():
 
 def delete_cancelled_docs():
 	dt_list = ["Journal Entry", "Stock Entry", "Investment Transaction"]
-	deleted_doc = ["Price Tracker", "Journal Entry", "Stock Entry", "Investment Transaction"]
+	deleted_doc = ["Price Tracker", "Journal Entry", "Stock Entry", "Investment Transaction", "Error Log"]
 	for dt in dt_list:
 		linked_docs = frappe.db.sql("""SELECT amended_from FROM `tab%s` 
 			WHERE docstatus !=2 AND amended_from IS NOT NULL"""%(dt),as_list=1)
