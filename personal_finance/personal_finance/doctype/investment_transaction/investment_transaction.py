@@ -32,7 +32,6 @@ class InvestmentTransaction(Document):
 
 	def on_cancel(self):
 		self.make_price_tracker(flag='delete')
-		delete_gl_entries(None, self.doctype, self.name)
 		self.cancel_ste()
 		self.cancel_jv()
 
