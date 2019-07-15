@@ -90,7 +90,7 @@ doc_events = {
 
 scheduler_events = {
  	"all": [
- 		"personal_finance.tasks.all"
+ 		"personal_finance.tasks.all.execute"
  	],
 # 	"daily": [
 # 		"personal_finance.tasks.daily"
