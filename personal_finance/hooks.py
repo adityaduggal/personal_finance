@@ -88,10 +88,10 @@ doc_events = {
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"personal_finance.tasks.all"
-# 	],
+scheduler_events = {
+ 	"all": [
+ 		"personal_finance.tasks.all"
+ 	],
 # 	"daily": [
 # 		"personal_finance.tasks.daily"
 # 	],
@@ -104,7 +104,7 @@ doc_events = {
 # 	"monthly": [
 # 		"personal_finance.tasks.monthly"
 # 	]
-# }
+}
 
 # Testing
 # -------
