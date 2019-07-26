@@ -190,7 +190,7 @@ class InvestmentTransaction(Document):
 
 	def make_price_tracker(self, flag=None):
 		for row in self.transactions:
-			if row.type_of_transaction == 'Buy' or 'Sell':
+			if row.type_of_transaction in ['Buy', 'Sell']:
 				ptracker = frappe.db.sql("""SELECT name FROM `tabPrice Tracker` 
 					WHERE investment = '%s' AND price_date = '%s'"""%(row.investment_name, row.date), as_list=1)
 				if not ptracker and flag == 'create':
