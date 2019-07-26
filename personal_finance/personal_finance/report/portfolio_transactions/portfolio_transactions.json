@@ -1,0 +1,24 @@
+{
+ "add_total_row": 1,
+ "creation": "2019-07-26 14:04:50.022890",
+ "disable_prepared_report": 1,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2019-07-26 14:04:50.022890",
+ "modified_by": "Administrator",
+ "module": "Personal Finance",
+ "name": "Portfolio Transactions",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Investment Transaction",
+ "report_name": "Portfolio Transactions",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}
