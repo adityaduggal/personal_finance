@@ -1,0 +1,61 @@
+{
+ "creation": "2020-12-23 09:33:39.622652",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "symbol",
+  "company_name",
+  "cb0",
+  "type",
+  "create_stock"
+ ],
+ "fields": [
+  {
+   "columns": 2,
+   "fieldname": "symbol",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Symbol",
+   "read_only": 1
+  },
+  {
+   "columns": 1,
+   "fieldname": "type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "cb0",
+   "fieldtype": "Column Break",
+   "read_only": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "company_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Company Name",
+   "read_only": 1
+  },
+  {
+   "columns": 2,
+   "fieldname": "create_stock",
+   "fieldtype": "Button",
+   "label": "Create Stock"
+  }
+ ],
+ "istable": 1,
+ "modified": "2020-12-24 09:59:48.030342",
+ "modified_by": "Administrator",
+ "module": "Personal Finance",
+ "name": "Stock Search Results",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
