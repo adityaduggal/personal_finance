@@ -3,15 +3,6 @@ from frappe import _
 def get_data():
     return [
         {
-            "label": _("Health and Wellness"),
-            "items": [
-                {
-                    "type": "doctype",
-                    "name": "CoWIN",
-                }
-            ]
-        },
-        {
             "label": _("Transaction Masters"),
             "items": [
                 {
