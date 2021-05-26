@@ -6,6 +6,7 @@ def get_data():
 	return [
 		{
 			"module_name": "Personal Finance",
+			"label": "Personal Finance Docs",
 			"color": "grey",
 			"icon": "octicon octicon-file-directory",
 			"type": "module",
