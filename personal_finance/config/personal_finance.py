@@ -37,11 +37,7 @@ def get_data():
                 },
                 {
                     "type": "doctype",
-                    "name": "Search and Create Stocks",
-                },
-                {
-                    "type": "doctype",
-                    "name": "Price Tracker",
+                    "name": "Get Stock Price",
                 }
             ]
         },
