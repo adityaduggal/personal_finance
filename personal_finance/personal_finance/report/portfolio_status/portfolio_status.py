@@ -16,7 +16,7 @@ def get_columns(filters):
     return ["Portfolio:Link/Portfolio:120", "Investment Name:Link/Item:180", "Group::80", "Symbol::80",
             "Quantity:Float:80", "Cost Price:Currency:80", "Total Cost:Currency:120", "Realised P/L:Currency:120",
             "Unrealised P/L:Currency:120", "Dividend:Currency:80", "Total P/L:Currency:100", "ROI:Percent:80",
-            "Annualised ROI:Percent:80", "Latest Price:Currency:80"]
+            "Annualised ROI:Percent:80", "Latest Date:Date:80", "Latest Price:Currency:80", "Latest Value:Currency:120"]
 
 
 def get_data(filters):
@@ -25,10 +25,10 @@ def get_data(filters):
     zero_invest = filters.get("zero")
     cond_it, cond_itd, cond_ptrack = get_conditions(filters)
 
-    query = """SELECT it.name, it.portfolio, itd.date, itd.type_of_transaction, itd.investment_name, 
+    query = """SELECT it.name, it.portfolio, itd.date, itd.type_of_transaction, itd.investment_name,
     itd.quantity, itd.price, itd.commission, itd.total
-    FROM `tabInvestment Transaction` it, `tabInvestment Transaction Detail` itd 
-    WHERE it.docstatus = 1 AND itd.parent = it.name %s %s 
+    FROM `tabInvestment Transaction` it, `tabInvestment Transaction Detail` itd
+    WHERE it.docstatus = 1 AND itd.parent = it.name %s %s
     ORDER BY itd.date""" % (cond_it, cond_itd)
 
     invst_tran = frappe.db.sql(query, as_dict=1)
@@ -41,9 +41,9 @@ def get_data(filters):
 
     for portf in portfolio:
         for item in item_list:
-            lat_price = frappe.db.sql("""SELECT name, price FROM `tabPrice Tracker` 
-            WHERE docstatus=0 AND investment = '%s' %s 
-            ORDER BY price_date DESC LIMIT 1""" % (item.name, cond_ptrack), as_list=1)
+            last_price = frappe.db.sql("""SELECT name, price, price_date FROM `tabPrice Tracker`
+            WHERE docstatus=0 AND investment = '%s' %s
+            ORDER BY price_date DESC LIMIT 1""" % (item.name, cond_ptrack), as_dict=1)
             transactions = 0
             qty = 0
             total_cost = 0
@@ -77,8 +77,9 @@ def get_data(filters):
                 if qty > 0:
                     if total_sell == 0:
                         profit = 0
-                        unrel_profit = (qty * lat_price[0][1]) - total_cost
+                        unrel_profit = (qty * last_price[0].price) - total_cost
                     else:
+                        unrel_profit = qty * (last_price[0].price - av_price)
                         profit = total_sell - total_cost
                 else:
                     profit = total_sell - total_cost
@@ -87,12 +88,14 @@ def get_data(filters):
                 ann_roi = pow((1 + roi), (365 / tot_days)) - 1
                 if zero_invest == 1:
                     row = [portf[0], item.name, item.item_group, item.symbol, qty, av_price, total_cost, profit,
-                           unrel_profit, div, unrel_profit + profit + div, roi * 100, ann_roi * 100, lat_price[0][1]]
+                           unrel_profit, div, unrel_profit + profit + div, roi * 100, ann_roi * 100,
+                           last_price[0].price_date, last_price[0].price, qty*last_price[0].price]
                     data.append(row)
                 else:
                     if qty > 0:
                         row = [portf[0], item.name, item.item_group, item.symbol, qty, av_price, total_cost, profit,
-                               unrel_profit, div, unrel_profit + profit + div, roi * 100, ann_roi * 100, lat_price[0][1]]
+                               unrel_profit, div, unrel_profit + profit + div, roi * 100, ann_roi * 100,
+                               last_price[0].price_date, last_price[0].price, qty*last_price[0].price]
                         data.append(row)
     return data
 
