@@ -4,7 +4,9 @@
 
 from __future__ import unicode_literals
 import frappe
+import pandas as pd
 from frappe.model.document import Document
+from frappe.utils import getdate
 
 
 class PriceTracker(Document):
@@ -22,3 +24,42 @@ def get_price_doc(item, date):
             price = frappe.get_doc("Price Tracker", price_list[0].name)
 
     return price
+
+
+def update_price_doc_values(price_doc, df):
+    frappe.throw("Hello Update")
+
+
+
+def create_new_stock_price(it_name, price_date, df):
+    itd = frappe.get_doc("Item", it_name)
+    pt = frappe.new_doc("Price Tracker")
+    pt.investment = it_name
+    pt.price_date = price_date
+    pt.price = df["Close"]
+    pt.open = df["Open"]
+    pt.high = df["High"]
+    pt.low = df["Low"]
+    pt.close = df["Close"]
+    pt.vwap = df["VWAP"]
+    pt.volume = df["Volume"]
+    pt.delivered_volume = df["Deliverable Volume"]
+    itd.prices_fetched_upto = price_date
+    pt.insert()
+    print(f"Created {pt.name} for {it_name} for Date: {price_date}")
+
+
+
+def update_stock_prices(it_name, pd_df):
+    pd_df.fillna(0)
+    dates = pd_df.index
+    itd = frappe.get_doc("Item", it_name)
+    for index, row in pd_df.iterrows():
+        cur_date = getdate(index)
+        price_doc = get_price_doc(it_name, getdate(index))
+        if price_doc:
+            update_price_doc_values(price_doc, row)
+        else:
+            create_new_stock_price(it_name, getdate(index), row)
+    itd.prices_fetched_upto = cur_date
+    itd.save()
